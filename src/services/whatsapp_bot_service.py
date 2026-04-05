@@ -82,9 +82,9 @@ class WhatsAppBotService:
             logger.error(f"Erro ao enviar mensagem: {e}")
             return False
 
-    def send_message_24h_before(self, phone_number: str, message: str, event_time: datetime) -> bool:
+    def send_message_12h_before(self, phone_number: str, message: str, event_time: datetime) -> bool:
         """
-        Envia uma mensagem 24 horas antes de um evento
+        Envia uma mensagem 12 horas antes de um evento
         
         Args:
             phone_number: Número do WhatsApp
@@ -95,8 +95,8 @@ class WhatsAppBotService:
             True se a mensagem foi agendada
         """
         try:
-            # Calcula a hora de envio (24h antes)
-            send_time = event_time - timedelta(hours=24)
+            # Calcula a hora de envio (12h antes)
+            send_time = event_time - timedelta(hours=12)
             
             # Se o horário já passou, envia imediatamente
             if send_time <= datetime.now():
@@ -112,7 +112,7 @@ class WhatsAppBotService:
             )
 
         except Exception as e:
-            logger.error(f"Erro ao agendar envio 24h antes: {e}")
+            logger.error(f"Erro ao agendar envio 12h antes: {e}")
             return False
 
     def send_notification(self, phone_number: str, person_name: str, event_date: str, 

@@ -30,7 +30,7 @@ WHATSAPP_DELAY_SECONDS = int(os.getenv("WHATSAPP_DELAY_SECONDS", "3"))
 
 # Scheduler Configuration
 SCHEDULER_ENABLED = os.getenv("SCHEDULER_ENABLED", "True").lower() == "true"
-MESSAGE_ADVANCE_HOURS = int(os.getenv("MESSAGE_ADVANCE_HOURS", "24"))
+MESSAGE_ADVANCE_HOURS = int(os.getenv("MESSAGE_ADVANCE_HOURS", "12"))
 CHECK_INTERVAL_MINUTES = int(os.getenv("CHECK_INTERVAL_MINUTES", "30"))
 
 # File Paths

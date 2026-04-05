@@ -140,13 +140,13 @@ class MinisterioIluminacaoBot:
 
     def schedule_all_notifications(self, names_and_dates: dict) -> None:
         """
-        Agenda notificações para 24h antes de cada evento
+        Agenda notificações para 12h antes de cada evento
         
         Args:
             names_and_dates: Dicionário com {nome: data_evento}
         """
         logger.info("="*60)
-        logger.info("AGENDANDO NOTIFICAÇÕES (24h antes)")
+        logger.info("AGENDANDO NOTIFICAÇÕES (12h antes)")
         logger.info("="*60)
 
         self.scheduler_service.start()
@@ -161,8 +161,8 @@ class MinisterioIluminacaoBot:
 
                 event_datetime = datetime.fromisoformat(event_datetime_str)
                 
-                # Agenda para 24h antes
-                send_time = event_datetime - timedelta(hours=24)
+                # Agenda para 12h antes
+                send_time = event_datetime - timedelta(hours=12)
                 
                 if send_time <= datetime.now():
                     logger.warning(f"Horário já passou para {name}, enviando agora")

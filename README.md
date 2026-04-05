@@ -6,7 +6,7 @@
 - Frequentemente, as pessoas esquecem que estão escaladas no dia em que estão na escala - por uma comunicação muitas vezes insuficiente. 
 
 ### Solução: 
-- Farei uma automação que lerá a escala (lerá o arquivo PNG) e enviará uma mensagem no Whatsapp da pessoa escalada 24 horas antes do culto em que está escalada. 
+- Farei uma automação que lerá a escala (lerá o arquivo PNG) e enviará uma mensagem no Whatsapp da pessoa escalada 12 horas antes do culto em que está escalada. 
 
 ### Funcionalidades: 
     - Leitura automática de imagem (OCR); 
