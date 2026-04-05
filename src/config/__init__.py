@@ -1,0 +1,43 @@
+"""
+Módulo de configuração centralizada da aplicação.
+
+Exporta todas as configurações gerais e variáveis de ambiente.
+"""
+
+from .settings import (
+    BASE_DIR,
+    SRC_DIR,
+    ASSETS_DIR,
+    LOGS_DIR,
+    GOOGLE_CLOUD_CREDENTIALS_PATH,
+    GOOGLE_PROJECT_ID,
+    WHATSAPP_SESSION_PATH,
+    WHATSAPP_DELAY_SECONDS,
+    SCHEDULER_ENABLED,
+    MESSAGE_ADVANCE_HOURS,
+    CHECK_INTERVAL_MINUTES,
+    CONTACTS_FILE_PATH,
+    SCALE_IMAGE_PATH,
+    LOG_LEVEL,
+    LOG_FILE,
+    TIMEZONE,
+)
+
+__all__ = [
+    "BASE_DIR",
+    "SRC_DIR",
+    "ASSETS_DIR",
+    "LOGS_DIR",
+    "GOOGLE_CLOUD_CREDENTIALS_PATH",
+    "GOOGLE_PROJECT_ID",
+    "WHATSAPP_SESSION_PATH",
+    "WHATSAPP_DELAY_SECONDS",
+    "SCHEDULER_ENABLED",
+    "MESSAGE_ADVANCE_HOURS",
+    "CHECK_INTERVAL_MINUTES",
+    "CONTACTS_FILE_PATH",
+    "SCALE_IMAGE_PATH",
+    "LOG_LEVEL",
+    "LOG_FILE",
+    "TIMEZONE",
+]
