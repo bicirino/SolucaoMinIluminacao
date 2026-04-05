@@ -1,0 +1,9 @@
+python-dotenv>=1.0.0
+google-cloud-vision>=3.4.5
+PyWhatKit>=5.5.11
+APScheduler>=3.10.4
+Pillow>=10.1.0
+requests>=2.31.0
+selenium>=4.15.2
+pytz>=2023.3
+pydantic>=2.5.0
