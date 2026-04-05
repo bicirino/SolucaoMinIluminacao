@@ -62,10 +62,10 @@ class MinisterioIluminacaoBot:
         success = self.whatsapp_service.setup_session()
         
         if success:
-            logger.info("✓ Sessão configurada com sucesso")
-            logger.info("Você pode agora usar o bot para enviar mensagens")
+            logger.info("[OK] Sessao configurada com sucesso")
+            logger.info("Voce pode agora usar o bot para enviar mensagens")
         else:
-            logger.error("✗ Erro ao configurar a sessão")
+            logger.error("[ERRO] Erro ao configurar a sessao")
         
         return success
 
@@ -180,7 +180,7 @@ class MinisterioIluminacaoBot:
                               event_datetime.strftime("%H:%M")),
                         job_id=f"notif_{name.replace(' ', '_')}"
                     )
-                    logger.info(f"✓ Notificação agendada para {name}: {job_id}")
+                    logger.info(f"[OK] Notificacao agendada para {name}: {job_id}")
 
             except Exception as e:
                 logger.error(f"Erro ao agendar para {name}: {e}")
@@ -221,9 +221,9 @@ class MinisterioIluminacaoBot:
 
         success = self.contact_service.add_contact(name, phone)
         if success:
-            logger.info(f"✓ Contato adicionado: {name}")
+            logger.info(f"[OK] Contato adicionado: {name}")
         else:
-            logger.error("✗ Erro ao adicionar contato")
+            logger.error("[ERRO] Erro ao adicionar contato")
         
         return success
 

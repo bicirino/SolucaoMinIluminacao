@@ -239,7 +239,7 @@ Que Deus te abençoe! 🙏✨
         Returns:
             Mensagem de confirmação
         """
-        return f"✓ {event_count} notificações foram enviadas com sucesso!"
+        return f"[OK] {event_count} notificacoes foram enviadas com sucesso!"
 
 
 def validate_environment() -> bool:
@@ -256,8 +256,8 @@ def validate_environment() -> bool:
             LOG_FILE
         )
         
-        logger.info("✓ Configurações carregadas")
+        logger.info("[OK] Configuracoes carregadas")
         return True
     except Exception as e:
-        logger.error(f"✗ Erro na validação do ambiente: {e}")
+        logger.error(f"[ERRO] Erro na validacao do ambiente: {e}")
         return False
