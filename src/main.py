@@ -280,10 +280,10 @@ class MinisterioIluminacaoBot:
             elif choice == "3":
                 self.list_contacts()
             elif choice == "4":
-                # Exemplo de envio
+                # Envio de notificações de teste
                 names_dates = {
-                    "João Silva": "2024-04-15 19:30",
-                    # Adicione mais conforme necessário
+                    "Gabriel Cirino": "2024-04-15 19:30",
+                    "Henrique": "2024-04-16 08:00",
                 }
                 self.send_notification_to_all(names_dates)
             elif choice == "5":
