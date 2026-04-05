@@ -1,6 +1,6 @@
 python-dotenv>=1.0.0
 google-cloud-vision>=3.4.5
-PyWhatKit>=5.5.11
+PyWhatKit>=5.4.0
 APScheduler>=3.10.4
 Pillow>=10.1.0
 requests>=2.31.0
