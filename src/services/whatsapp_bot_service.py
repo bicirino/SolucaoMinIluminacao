@@ -155,14 +155,14 @@ class WhatsAppBotService:
             Mensagem formatada
         """
         message = f"""
-Olá {person_name}! 👋
+Ola {person_name}!
 
-Lembrando que você está escalado(a) para o ministério de iluminação! 💡
+Lembrando que voce esta escalado(a) para o ministerio de iluminacao!
 
-📅 Data: {event_date}
-🕐 Horário: {event_time}
+Data: {event_date}
+Horario: {event_time}
 
-Que Deus te abençoe! 🙏
+Que Deus te abencoe!
 
 ---
 *Mensagem automática do Sistema de Escalas*

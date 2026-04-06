@@ -6,10 +6,11 @@ from datetime import datetime, timedelta
 # Adiciona o diretório pai ao path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.config import LOG_LEVEL, LOG_FILE
+from src.config import LOG_LEVEL, LOG_FILE, SCALE_VALIDATION_FILE
 from src.services.contact_service import ContactService
 from src.services.vision_ocr_service import VisionOCRService
 from src.services.whatsapp_bot_service import WhatsAppBotService
+from src.services.scale_validation_service import ScaleValidationService
 from src.jobs.scheduler_service import SchedulerService
 
 # Configuração de logging
@@ -37,6 +38,9 @@ class MinisterioIluminacaoBot:
         self.contact_service = ContactService()
         self.scheduler_service = SchedulerService()
         self.whatsapp_service = WhatsAppBotService()
+        
+        # Carrega o serviço de validação de escala
+        self.scale_validator = ScaleValidationService(SCALE_VALIDATION_FILE)
         
         # Vision service é opcional (requer credenciais Google)
         self.vision_service = None
@@ -104,6 +108,7 @@ class MinisterioIluminacaoBot:
 
         total = len(names_and_dates)
         success_count = 0
+        skipped_count = 0
 
         for name, event_datetime_str in names_and_dates.items():
             try:
@@ -116,6 +121,14 @@ class MinisterioIluminacaoBot:
 
                 # Parseia a data/hora do evento
                 event_datetime = datetime.fromisoformat(event_datetime_str)
+                
+                # Valida se a data/hora existe na escala
+                if not self.scale_validator.validate_person_datetime(name, event_datetime):
+                    logger.warning(f"[AVISO] Data/Hora inválida para {name}: {event_datetime_str}")
+                    logger.warning(f"        {name} NAO esta escalado(a) nesse dia/horario!")
+                    skipped_count += 1
+                    continue
+                
                 event_date = event_datetime.strftime("%d/%m")
                 event_time = event_datetime.strftime("%H:%M")
 
@@ -129,14 +142,16 @@ class MinisterioIluminacaoBot:
 
                 if success:
                     success_count += 1
-                    logger.info(f"✓ Notificação enviada para {name}")
+                    logger.info(f"[OK] Notificacao enviada para {name}")
                 else:
-                    logger.error(f"✗ Erro ao enviar para {name}")
+                    logger.error(f"[ERRO] Erro ao enviar para {name}")
 
             except Exception as e:
                 logger.error(f"Erro ao processar {name}: {e}")
 
-        logger.info(f"Resumo: {success_count}/{total} notificações enviadas")
+        logger.info(f"Resumo: {success_count}/{total} notificacoes enviadas")
+        if skipped_count > 0:
+            logger.warning(f"       {skipped_count} notificacoes rejeitadas (data/hora invalida)")
 
     def schedule_all_notifications(self, names_and_dates: dict) -> None:
         """
@@ -280,12 +295,50 @@ class MinisterioIluminacaoBot:
             elif choice == "3":
                 self.list_contacts()
             elif choice == "4":
-                # Envio de notificações de teste
-                names_dates = {
-                    "Gabriel Cirino": "2024-04-15 19:30",
-                    "Henrique": "2024-04-16 08:00",
-                }
-                self.send_notification_to_all(names_dates)
+                # Envio de notificações de teste - solicitação manual de dados
+                print("\n" + "="*60)
+                print("ENVIAR NOTIFICACOES")
+                print("="*60)
+                print("Digite no formato: Nome | Data (YYYY-MM-DD) | Hora (HH:MM)")
+                print("Exemplo: Henrique | 2026-04-20 | 19:30")
+                print("Digite 'fim' para terminar e enviar")
+                print("="*60)
+                
+                names_dates = {}
+                while True:
+                    entry = input("\nNome | Data | Hora (ou 'fim'): ").strip()
+                    
+                    if entry.lower() == "fim":
+                        break
+                    
+                    if not entry:
+                        continue
+                    
+                    try:
+                        parts = [p.strip() for p in entry.split("|")]
+                        if len(parts) != 3:
+                            print("[ERRO] Formato invalido. Use: Nome | YYYY-MM-DD | HH:MM")
+                            continue
+                        
+                        name, date_str, time_str = parts
+                        # Valida formato da data e hora
+                        datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
+                        
+                        names_dates[name] = f"{date_str} {time_str}"
+                        print(f"[OK] Adicionado: {name} em {date_str} as {time_str}")
+                    except ValueError as e:
+                        print(f"[ERRO] Formato invalido: {e}")
+                        continue
+                
+                if names_dates:
+                    print("\n" + "="*60)
+                    print(f"Enviando {len(names_dates)} notificacao(oes)...")
+                    print("="*60)
+                    self.send_notification_to_all(names_dates)
+                    print("="*60)
+                    input("\nPressione ENTER para voltar ao menu...")
+                else:
+                    print("\n[AVISO] Nenhuma notificacao foi adicionada")
             elif choice == "5":
                 self.get_scheduler_status()
             elif choice == "6":

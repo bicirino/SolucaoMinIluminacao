@@ -43,6 +43,12 @@ SCALE_IMAGE_PATH = os.getenv(
     str(ASSETS_DIR / "escala-mes.png")
 )
 
+# Scale Validation
+SCALE_VALIDATION_FILE = os.getenv(
+    "SCALE_VALIDATION_FILE",
+    str(BASE_DIR / "escala_valida.json")
+)
+
 # Logging
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 LOG_FILE = os.getenv("LOG_FILE", str(LOGS_DIR / "app.log"))
